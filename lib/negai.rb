@@ -18,4 +18,4 @@ you should have received a copy of the gnu general public license
 along with negai.  if not, see <http://www.gnu.org/licenses/>.
 
 =end
-require "negai/negai_runner"
+require "negai/runner"
