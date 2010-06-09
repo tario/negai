@@ -24,9 +24,20 @@ module Negai
 class Runner
 
   attr_accessor :permissions
+  attr_accessor :source
 
   def run(code)
 
+    perm = nil
+    perm = permissions
+    unless perm
+      perm = Shikashi::Privileges.new # nil permissions
+    end
+
+    sandbox = Shikashi::Sandbox.new
+    sandbox.source = self.source if source
+    sandbox.privileges = perm
+    sandbox.run(code)
   end
 
 end
