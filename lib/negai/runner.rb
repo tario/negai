@@ -44,17 +44,16 @@ class Runner
     end
   end
 
-  def sandbox
-    Shikashi::Sandbox.new
-  end
-
   def run(*args)
-    s = sandbox
+    s = Shikashi::Sandbox.new
 
-    pseudo_class = PseudoWrapperClass.new
-    pseudo_class.output_proc = output_proc
+    if output_proc then
+      pseudo_class = PseudoWrapperClass.new
+      pseudo_class.output_proc = output_proc
 
-    s.redirect :print, :wrapper_class => pseudo_class
+      s.redirect :print, :wrapper_class => pseudo_class
+    end
+
     s.run(*args)
   end
 end
