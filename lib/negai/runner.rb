@@ -21,6 +21,10 @@ along with negai.  if not, see <http://www.gnu.org/licenses/>.
 require "shikashi"
 
 module Negai
+  def self.empty_privileges
+    Shkashi::Privileges.new
+  end
+
 class Runner
 
   #
