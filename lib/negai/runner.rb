@@ -23,11 +23,13 @@ require "shikashi"
 module Negai
 class Runner
 
-  attr_accessor :sandbox
+
+  def sandbox
+    Shikashi::Sandbox.new
+  end
 
   def run(*args)
     sandbox.run(*args)
   end
-
 end
 end
