@@ -22,7 +22,7 @@ require "shikashi"
 
 module Negai
   def self.empty_privileges
-    Shkashi::Privileges.new
+    Shikashi::Privileges.new
   end
 
 class Runner
