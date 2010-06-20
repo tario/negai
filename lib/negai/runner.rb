@@ -23,13 +23,39 @@ require "shikashi"
 module Negai
 class Runner
 
+  attr_accessor :output_proc
+
+  class PrintWrapper < Shikashi::Sandbox::MethodWrapper
+    attr_accessor :output_proc
+    def call(*args)
+      output_proc.call(*args)
+      original_call(*args)
+    end
+  end
+
+  class PseudoWrapperClass
+    attr_accessor :output_proc
+    def redirect_handler(klass, recv, method_id, method_name, sandbox)
+      mw = PrintWrapper.redirect_handler(klass, recv, method_id, method_name, sandbox) do |x|
+        x.output_proc = output_proc
+      end
+
+      mw
+    end
+  end
 
   def sandbox
     Shikashi::Sandbox.new
   end
 
   def run(*args)
-    sandbox.run(*args)
+    s = sandbox
+
+    pseudo_class = PseudoWrapperClass.new
+    pseudo_class.output_proc = output_proc
+
+    s.redirect :print, :wrapper_class => pseudo_class
+    s.run(*args)
   end
 end
 end
